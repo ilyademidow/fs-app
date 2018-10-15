@@ -1,0 +1,58 @@
+### =============== FrontEnd =================== ###
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/fs-app-frontend/dist
+/fs-app-frontend/tmp
+/fs-app-frontend/out-tsc
+
+# dependencies
+/fs-app-frontend/node_modules
+
+# IDEs and editors
+/fs-app-frontend/.idea
+/fs-app-frontend/.project
+/fs-app-frontend/.classpath
+/fs-app-frontend/.c9/
+/fs-app-frontend/*.launch
+/fs-app-frontend/.settings/
+/fs-app-frontend/*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+### =============================== BackEnd =================================== ###
+/fs-app-backend/target/
+/fs-app-backend/!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+/fs-app-backend/.apt_generated
+/fs-app-backend/.classpath
+/fs-app-backend/.factorypath
+/fs-app-backend/.project
+/fs-app-backend/.settings
+/fs-app-backend/.springBeans
+/fs-app-backend/.sts4-cache
+
+### IntelliJ IDEA ###
+/fs-app-backend/.idea
+/fs-app-backend/*.iws
+/fs-app-backend/*.iml
+/fs-app-backend/*.ipr
