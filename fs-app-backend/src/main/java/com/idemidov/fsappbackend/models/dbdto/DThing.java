@@ -1,15 +1,20 @@
-package com.idemidov.fsappbackend.models;
+package com.idemidov.fsappbackend.models.dbdto;
 
-public class Thing {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class DThing {
+    @Id
     private Integer id;
     private String name;
     private String description;
 
-    public Thing() {
+    public DThing() {
 
     }
 
-    public Thing(Integer id, String name, String description) {
+    public DThing(Integer id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
