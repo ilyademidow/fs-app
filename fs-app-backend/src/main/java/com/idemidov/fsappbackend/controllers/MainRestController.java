@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:4200")
 public class MainRestController {
     public static final Logger LOGGER = LoggerFactory.getLogger(MainRestController.class);
     @Autowired
@@ -25,9 +27,15 @@ public class MainRestController {
 
     @GetMapping(path = "/things")
     public List<JThing> getThingList() {
-        List<DThing> DThings = new LinkedList<>();
-        thingRepository.findAll().forEach(DThings::add);
-        return ThingMapper.DBtoJSON(DThings);
+        try {
+            List<DThing> DThings = new LinkedList<>();
+            thingRepository.findAll().forEach(DThings::add);
+            LOGGER.info(DThings.stream().map(Object::toString).collect(Collectors.joining(",")));
+            return ThingMapper.DBtoJSON(DThings);
+        } catch (NullPointerException e) {
+            LOGGER.warn("No things");
+            return new ArrayList<JThing>();
+        }
     }
 
     @GetMapping(path = "/things/{id}")
