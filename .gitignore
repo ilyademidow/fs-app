@@ -43,6 +43,8 @@ testem.log
 Thumbs.db
 ### =============================== BackEnd =================================== ###
 /fs-app-backend/target/
+# Exclude generated resources. See fs-app-frontend Maven Task exec:exec
+/fs-app-backend/src/main/resources/static/
 /fs-app-backend/!.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
