@@ -52,18 +52,6 @@
 
 	<build>
 		<plugins>
-			<!--<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-						<phase>package</phase>
-					</execution>
-				</executions>
-			</plugin>-->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
