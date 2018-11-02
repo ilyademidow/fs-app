@@ -1,9 +1,6 @@
 package com.idemidov.fsappbackend.models.dbdto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class DThing {
@@ -11,6 +8,7 @@ public class DThing {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
+    @Column(length = 512)
     private String description;
 
     public DThing() {
