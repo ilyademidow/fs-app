@@ -21,12 +21,20 @@ export class ThingsService {
 
   getThing(id: number) {
     return this.http.get<Thing>(environment.thingServiceUrl + 'api/things/' + id);
-    // return of(ThingsMock[id - 1]);
+    //return of(ThingsMock[id - 1]);
+  }
+
+  deleteThing(id: number) {
+    return this.http.delete<Thing>(environment.thingServiceUrl + 'api/things/' + id);
   }
 
   saveThing(thing: Thing) {
     return this.http.post<Thing[]>(environment.thingServiceUrl + 'api/things', thing);
     // return of(ThingsMock[id - 1]);
+  }
+
+  editThing(thing: Thing) {
+    return this.http.put<Thing>(environment.thingServiceUrl + 'api/things/' + thing.id, thing);
   }
 }
 

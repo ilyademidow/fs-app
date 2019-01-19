@@ -21,9 +21,9 @@
                  placeholder="Enter name">
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" #desc placeholder="Description">
+          <textarea class="form-control" #desc placeholder="Description" rows="3"></textarea>
         </div>
-        <button class="btn btn-primary" (click)="saveThing(nm.value, desc.value)" data-dismiss="modal">Submit</button>
+        <button class="btn btn-primary" (click)="saveThing(nm.value, desc.value)" data-dismiss="modal">Add</button>
       </div>
     </div>
   </div>

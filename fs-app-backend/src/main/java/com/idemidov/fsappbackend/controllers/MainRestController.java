@@ -7,13 +7,7 @@ import com.idemidov.fsappbackend.models.frontenddto.JThing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -22,7 +16,7 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping("/api")
 public class MainRestController {
     public static final Logger LOGGER = LoggerFactory.getLogger(MainRestController.class);
@@ -45,21 +39,34 @@ public class MainRestController {
     @GetMapping(path = "/things/{id}")
     public JThing getThingById(@PathVariable Integer id) {
         try {
-            LOGGER.info("Thing with id=" + id);
+            LOGGER.info("Thing with id={}", id);
             return thingRepository.findById(id).map(ThingMapper::DBtoJSON).get();
         } catch (NoSuchElementException e) {
-            LOGGER.warn("No thing with id=" + id);
+            LOGGER.warn("No thing with id={}", id);
             return new JThing();
         }
     }
 
     @PostMapping(path = "/things", consumes = "application/json")
     public List<JThing> saveThing(@RequestBody JThing jThing) {
-        LOGGER.info("Create/update thing=" + jThing.getId());
+        LOGGER.info("Create thing={}", jThing.getId());
         thingRepository.save(ThingMapper.JSONtoDB(jThing));
         List<DThing> dThings = new LinkedList<>();
         thingRepository.findAll().forEach(dThings::add);
         return ThingMapper.DBtoJSON(dThings);
+    }
+
+    @PutMapping(path = "/things/{id}", consumes = "application/json")
+    public JThing editThing(@RequestBody JThing jThing) {
+        LOGGER.info("Update thing={}", jThing.getId());
+        thingRepository.save(ThingMapper.JSONtoDB(jThing));
+        return thingRepository.findById(jThing.getId()).map(ThingMapper::DBtoJSON).get();
+    }
+
+    @DeleteMapping(path = "/things/{id}")
+    public void deleteThing(@PathVariable Integer id) {
+        thingRepository.deleteById(id);
+        LOGGER.info("Delete thing={}", id);
     }
 
 }

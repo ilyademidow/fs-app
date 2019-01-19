@@ -15,11 +15,30 @@ export class ThingComponent implements OnInit {
     description: ''
   };
 
-  constructor(private thingService: ThingsService, private router: Router) { }
+  constructor(private thingService: ThingsService, private router: Router) {
+  }
 
   ngOnInit() {
     const urlParam = this.router.url.split('/');
+
     this.thingService.getThing(Number.parseFloat(urlParam[urlParam.length - 1])).subscribe((returnedThing) => {
+      this.thing = returnedThing;
+    });
+  }
+
+  deleteThing(id: number) {
+    // const urlParam = this.router.url.split('/');
+    // const id = Number.parseFloat(urlParam[urlParam.length - 1]);
+
+    this.thingService.deleteThing(id).subscribe();
+    this.router.navigateByUrl("/things");
+  }
+
+  editThing(id: number, name: string, desc:string) {
+    // const urlParam = this.router.url.split('/');
+    const newThing = { id: id, name: name, description: desc };
+
+    this.thingService.editThing(newThing).subscribe((returnedThing) => {
       this.thing = returnedThing;
     });
   }
