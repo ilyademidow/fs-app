@@ -30,8 +30,7 @@ export class ThingComponent implements OnInit {
     // const urlParam = this.router.url.split('/');
     // const id = Number.parseFloat(urlParam[urlParam.length - 1]);
 
-    this.thingService.deleteThing(id).subscribe();
-    this.router.navigateByUrl("/things");
+    this.thingService.deleteThing(id).subscribe((returnedThing) => { this.router.navigateByUrl("/things"); });
   }
 
   editThing(id: number, name: string, desc:string) {
