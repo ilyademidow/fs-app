@@ -1,0 +1,62 @@
+apiVersion: "apps.openshift.io/v1"
+kind: "List"
+items:
+- apiVersion: "v1"
+  kind: "DeploymentConfig"
+  metadata:
+    name: "fs"
+  spec: 
+    replicas: 1
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      type: "Rolling"
+    template:
+      metadata:
+          labels:
+            name: "fs-app"
+      spec: 
+        containers:
+          - name: "fs-app"
+            ports:
+              - containerPort: 8080
+                protocol: "TCP"
+            image: >-
+              "ilyademidow/fs-app@sha256:627a32ac4fe5d65ce1fc080d7f6fc91469e217ed73b97fd822cd14cfd73b1adc"
+            imagePullPolicy: "Always"
+    test: false
+    triggers:
+      - type: "ConfigChange"
+      - imageChangeParams:
+          automatic: true
+          containerNames:
+            - "fs-app"
+          from:
+            kind: "ImageStreamTag"
+            name: "fs-app:0.0.1-SNAPSHOT"
+            namespace: "ilyademidow-helloworld"
+          lastTriggeredImage: >-
+            "ilyademidow/fs-app@sha256:627a32ac4fe5d65ce1fc080d7f6fc91469e217ed73b97fd822cd14cfd73b1adc"
+        type: "ImageChange"
+    paused: false
+    revisionHistoryLimit: 2
+    minReadySeconds: 1
+- apiVersion: "v1"
+  kind: "Service"
+  metadata:
+    name: "fs-app"
+    namespace: "ilyademidow-helloworld"
+    selfLink: "/api/v1/namespaces/ilyademidow-helloworld/services/fs-app-service"
+  spec:
+    ports:
+      - name: "web"
+        port: 8080
+        protocol: "TCP"
+        targetPort: 8080
+    selector:
+      app: "fs-app"
+      deployment: "fs-app"
+      deploymentconfig: "fs-app"
+    type: "ClusterIP"
+  status:
+    loadBalancer: {}
